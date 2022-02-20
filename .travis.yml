@@ -1,11 +1,25 @@
 sudo: required
 services:
-          - docker
+  - docker
 
 before_install:
-          - docker build -t hemanth318/react-app -f Dockerfile.dev .
+  - docker build -t hemanth318/react-app -f Dockerfile.dev .
 
 script:
-          - docker run -e CI=true hemanth318/react-app npm run test
+  - docker run -e CI=true hemanth318/react-app npm run test
 
 language: generic
+
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-southeast-1"
+  app: "hemidocker"
+  env: "Hemidocker-env"
+  bucket_name: "elasticbeanstalk-ap-southeast-1-461551667025"
+  bucket_path: "hemidocker"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
+
