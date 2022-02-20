@@ -13,6 +13,7 @@ RUN npm run build
 
 # Download NGINX image
 FROM nginx
+EXPOSE 80
 
 # Copy build from builder step
 COPY --from=builder /app/build /usr/share/nginx/html
